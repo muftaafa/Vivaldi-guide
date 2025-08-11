@@ -1,338 +1,538 @@
-\documentclass[10pt,a4paper,oneside]{book}
+\documentclass[11pt,a4paper,oneside]{book}
 
-% Encoding and typography
+% Modern packages for typography and layout
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{microtype}
 \usepackage{lmodern}
-\usepackage{mathpazo}
-\usepackage[scaled=0.92]{helvet}
-\usepackage{courier}
+\usepackage{mathpazo} % Palatino font
+\usepackage[scaled=0.95]{helvet} % Helvetica for sans serif
+\usepackage{courier} % Courier for monospace
 
-% Geometry and layout (tight for ~8 pages)
+% Page layout and geometry (slightly tighter)
 \usepackage[
-  top=2cm,
-  bottom=2.2cm,
-  left=2cm,
-  right=2cm,
-  headheight=14pt,
-  headsep=0.6cm,
-  footskip=0.8cm
+    top=2.3cm,
+    bottom=2.3cm,
+    left=2.8cm,
+    right=2.3cm,
+    headheight=14pt,
+    headsep=0.8cm,
+    footskip=0.8cm
 ]{geometry}
-\setlength{\parskip}{0.3em}
-\setlength{\parindent}{0pt}
+\raggedbottom
+\linespread{0.98}
 
-% Colors and dark-mode page background
-\usepackage[dvipsnames,table]{xcolor}
-\definecolor{deepred}{HTML}{B71C1C}
-\definecolor{accentred}{HTML}{EF5350}
-\definecolor{darkbg}{HTML}{0E0E12}
-\definecolor{panelbg}{HTML}{15151B}
-\definecolor{textlight}{HTML}{EDEDED}
-\definecolor{textmuted}{HTML}{9AA0A6}
-\definecolor{rulemuted}{HTML}{2A2F36}
-\definecolor{codebg}{HTML}{0B0E14}
-\definecolor{okgreen}{HTML}{66BB6A}
-\definecolor{warnamber}{HTML}{FFC107}
-
-\pagecolor{darkbg}
-\color{textlight}
-
-% Graphics
-\usepackage{graphicx}
-\usepackage{mwe} % for example-image placeholder
-\usepackage{tikz}
-\usetikzlibrary{decorations.pathmorphing,patterns,shapes.geometric,positioning}
+% Reduce spacing around floats and captions
+\setlength{\textfloatsep}{10pt plus 2pt minus 3pt}
+\setlength{\intextsep}{10pt plus 2pt minus 3pt}
+\setlength{\floatsep}{10pt plus 2pt minus 3pt}
+\usepackage{caption}
+\captionsetup{skip=6pt,labelfont=bf}
 
 % Headers and footers
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\color{textmuted}\nouppercase{\leftmark}}
-\fancyhead[R]{\color{textmuted}\thepage}
+\fancyhead[L]{\nouppercase{\leftmark}}
+\fancyhead[R]{\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{rulemuted}\leaders\hrule height \headrulewidth\hfill}}
 \renewcommand{\footrulewidth}{0pt}
 
-% Titles
+% Colors and graphics
+\usepackage[dvipsnames,table]{xcolor}
+\usepackage{graphicx}
+\usepackage{mwe} % for example-image placeholder
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing,patterns,shapes.geometric}
+
+% Define color scheme
+\definecolor{primaryblue}{RGB}{0,102,204}
+\definecolor{accentorange}{RGB}{255,102,0}
+\definecolor{darkgray}{RGB}{64,64,64}
+\definecolor{lightgray}{RGB}{240,240,240}
+\definecolor{codebackground}{RGB}{248,248,248}
+\definecolor{warningred}{RGB}{204,0,0}
+
+% Enhanced sections and titles (tighter spacing)
 \usepackage{titlesec}
 \titleformat{\chapter}[display]
-  {\normalfont\huge\bfseries\color{deepred}}
-  {\chaptertitlename\ \thechapter}{10pt}{\Huge}
-\titlespacing*{\chapter}{0pt}{*1.2}{*0.8}
+{\normalfont\huge\bfseries\color{primaryblue}}
+{\chaptertitlename\ \thechapter}{16pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{*1.1}{*0.7}
 \titleformat{\section}
-  {\normalfont\Large\bfseries\color{deepred}}
-  {\thesection}{0.8em}{}
-\titlespacing*{\section}{0pt}{*0.9}{*0.4}
+{\normalfont\Large\bfseries\color{primaryblue}}
+{\thesection}{0.8em}{}
+\titlespacing*{\section}{0pt}{*0.9}{*0.5}
 \titleformat{\subsection}
-  {\normalfont\large\bfseries\color{textlight}}
-  {\thesubsection}{0.8em}{}
-\titlespacing*{\subsection}{0pt}{*0.8}{*0.3}
+{\normalfont\large\bfseries\color{darkgray}}
+{\thesubsection}{0.8em}{}
+\titlespacing*{\subsection}{0pt}{*0.8}{*0.4}
+\titleformat{\subsubsection}
+{\normalfont\normalsize\bfseries\color{darkgray}}
+{\thesubsubsection}{0.8em}{}
+\titlespacing*{\subsubsection}{0pt}{*0.7}{*0.3}
 
-% TOC styling (compact)
+% Table of contents styling (compact)
 \usepackage{tocloft}
-\renewcommand{\cfttoctitlefont}{\huge\bfseries\color{deepred}}
-\renewcommand{\cftchapfont}{\bfseries\color{deepred}}
-\renewcommand{\cftsecfont}{\color{textlight}}
+\renewcommand{\cfttoctitlefont}{\huge\bfseries\color{primaryblue}}
+\renewcommand{\cftchapfont}{\bfseries\color{primaryblue}}
+\renewcommand{\cftsecfont}{\color{darkgray}}
 \setlength{\cftbeforechapskip}{6pt}
 \setlength{\cftbeforesecskip}{2pt}
 
-% Lists
+% Lists and itemize (tighter)
 \usepackage{enumitem}
-\setlist[itemize]{leftmargin=*,topsep=0.25ex,itemsep=0.2ex}
-\setlist[enumerate]{leftmargin=*,topsep=0.25ex,itemsep=0.2ex}
+\setlist[itemize]{leftmargin=*,topsep=0.3ex,itemsep=0.15ex}
+\setlist[enumerate]{leftmargin=*,topsep=0.3ex,itemsep=0.15ex}
 
-% Code listings (dark)
+% Code listings (slightly tighter spacing)
 \usepackage{listings}
 \usepackage{listingsutf8}
-\lstdefinestyle{darkstyle}{
-  backgroundcolor=\color{codebg},
-  basicstyle=\ttfamily\small\color{textlight},
-  keywordstyle=\color{accentred}\bfseries,
-  commentstyle=\color{textmuted}\itshape,
-  stringstyle=\color{warnamber},
-  numberstyle=\tiny\color{textmuted},
-  numbers=left,
-  numbersep=8pt,
-  tabsize=2,
-  breaklines=true,
-  frame=single,
-  framesep=3pt,
-  framerule=0.6pt,
-  rulecolor=\color{rulemuted},
-  captionpos=b,
-  aboveskip=0.8em,
-  belowskip=0.8em,
-  xleftmargin=0.4cm,
-  xrightmargin=0.4cm
-}
-\lstset{style=darkstyle}
 
-% JS language
+\lstset{
+    backgroundcolor=\color{codebackground},
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{primaryblue}\bfseries,
+    commentstyle=\color{darkgray}\itshape,
+    stringstyle=\color{accentorange},
+    numberstyle=\tiny\color{darkgray},
+    numbers=left,
+    numbersep=6pt,
+    tabsize=2,
+    breaklines=true,
+    breakatwhitespace=false,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    frame=single,
+    framesep=2pt,
+    framerule=0.3pt,
+    rulecolor=\color{lightgray},
+    captionpos=b,
+    aboveskip=0.7em,
+    belowskip=0.7em,
+    xleftmargin=0.4cm,
+    xrightmargin=0.4cm
+}
+
+% Define JavaScript language for listings
 \lstdefinelanguage{JavaScript}{
-  keywords={typeof,new,true,false,catch,function,return,null,catch,switch,var,const,let,if,in,while,do,else,case,break},
-  keywordstyle=\color{accentred}\bfseries,
-  ndkeywords={class,export,boolean,throw,implements,import,this},
-  ndkeywordstyle=\color{textlight}\bfseries,
-  identifierstyle=\color{textlight},
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, const, let, if, in, while, do, else, case, break},
+  keywordstyle=\color{primaryblue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
   sensitive=false,
   comment=[l]{//},
   morecomment=[s]{/*}{*/},
-  commentstyle=\color{textmuted}\ttfamily,
-  stringstyle=\color{warnamber}\ttfamily,
+  commentstyle=\color{darkgray}\ttfamily,
+  stringstyle=\color{accentorange}\ttfamily,
   morestring=[b]',
   morestring=[b]"
 }
 
-% Boxes
+% Boxes and environments
 \usepackage[framemethod=TikZ]{mdframed}
+
+% Tip box
 \newmdenv[
-  backgroundcolor=panelbg,
-  linecolor=deepred,
-  linewidth=1.2pt,
-  leftline=true,rightline=false,topline=false,bottomline=false,
-  innerleftmargin=10pt, innerrightmargin=10pt, innertopmargin=8pt, innerbottommargin=8pt
+    backgroundcolor=lightgray,
+    linecolor=primaryblue,
+    linewidth=2pt,
+    leftline=true,
+    rightline=false,
+    topline=false,
+    bottomline=false,
+    leftmargin=0pt,
+    rightmargin=0pt,
+    innerleftmargin=10pt,
+    innerrightmargin=10pt,
+    innertopmargin=8pt,
+    innerbottommargin=8pt
 ]{tipbox}
+
+% Warning box
 \newmdenv[
-  backgroundcolor=panelbg,
-  linecolor=warnamber,
-  linewidth=1.2pt,
-  leftline=true,rightline=false,topline=false,bottomline=false,
-  innerleftmargin=10pt, innerrightmargin=10pt, innertopmargin=8pt, innerbottommargin=8pt
+    backgroundcolor=lightgray,
+    linecolor=warningred,
+    linewidth=2pt,
+    leftline=true,
+    rightline=false,
+    topline=false,
+    bottomline=false,
+    leftmargin=0pt,
+    rightmargin=0pt,
+    innerleftmargin=10pt,
+    innerrightmargin=10pt,
+    innertopmargin=8pt,
+    innerbottommargin=8pt
 ]{warningbox}
+
+% Code box
 \newmdenv[
-  backgroundcolor=codebg,
-  linecolor=rulemuted,
-  linewidth=0.8pt,
-  innerleftmargin=8pt, innerrightmargin=8pt, innertopmargin=8pt, innerbottommargin=8pt
+    backgroundcolor=codebackground,
+    linecolor=darkgray,
+    linewidth=1pt,
+    leftmargin=0pt,
+    rightmargin=0pt,
+    innerleftmargin=8pt,
+    innerrightmargin=8pt,
+    innertopmargin=8pt,
+    innerbottommargin=8pt
 ]{codebox}
 
 % Hyperlinks
 \usepackage[
-  colorlinks=true,
-  linkcolor=accentred,
-  urlcolor=accentred,
-  citecolor=accentred,
-  bookmarks=true,
-  bookmarksnumbered=true,
-  pdfstartview=FitH
+    colorlinks=true,
+    linkcolor=primaryblue,
+    urlcolor=primaryblue,
+    citecolor=primaryblue,
+    bookmarks=true,
+    bookmarksnumbered=true,
+    pdfstartview=FitH
 ]{hyperref}
 
-% Tables and figures
+% Additional packages
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
 \usepackage{multicol}
-\usepackage{caption}
 \usepackage{subcaption}
-\captionsetup{labelfont=bf,textfont=it,justification=raggedright,singlelinecheck=false}
 
-% Commands
+% Custom commands
 \newcommand{\vivaldi}{\textsc{Vivaldi}}
+\newcommand{\chrome}{\textsc{Chrome}}
+\newcommand{\firefox}{\textsc{Firefox}}
+\newcommand{\brave}{\textsc{Brave}}
 \newcommand{\youtube}{\textsc{YouTube}}
 \newcommand{\surfingkeys}{\textsc{Surfingkeys}}
-\newcommand{\menupath}[1]{\textbf{\color{textlight}#1}}
-\newcommand{\keystroke}[1]{\texttt{\color{accentred}#1}}
-\newcommand{\extension}[1]{\textit{\color{accentred}#1}}
 
-% Title
-\title{%
-  \vspace{-1.8cm}
-  \begin{tikzpicture}[remember picture,overlay]
-    \node[anchor=north west,inner sep=0pt] at (current page.north west)
-      {\includegraphics[width=\paperwidth,height=3.2cm]{example-image}};
-  \end{tikzpicture}
-  \vspace{1.4cm}
-  {\Huge\bfseries\color{deepred} The Ultimate \vivaldi{} Setup (Compact)}\\[4pt]
-  {\large\color{textmuted} Fast, Private, GPU-Accelerated — in 8 Pages}
+\newcommand{\menupath}[1]{\textbf{\color{darkgray}#1}}
+\newcommand{\keystroke}[1]{\texttt{\color{primaryblue}#1}}
+\newcommand{\flag}[1]{\texttt{\color{accentorange}\#{}#1}}
+\newcommand{\extension}[1]{\textit{\color{primaryblue}#1}}
+
+% Title page information
+\title{
+    \vspace{-2cm}
+    \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=north west,inner sep=0pt] at (current page.north west)
+        {\includegraphics[width=\paperwidth,height=4cm]{example-image}};
+    \end{tikzpicture}
+    \vspace{2cm}
+    {\Huge\bfseries\color{primaryblue} The Ultimate \vivaldi{} Browser Setup}\\
+    \vspace{0.5cm}
+    {\Large\color{darkgray} Fast, Secure, Memory-Efficient Configuration}\\
+    \vspace{0.3cm}
+    {\large\color{darkgray} with \surfingkeys{} and Advanced \youtube{} Optimization}
 }
-\author{{\normalsize\textbf{Advanced Browser Configuration Guide}}}
+
+\author{
+    {\large\textbf{Advanced Browser Configuration Guide}}\\
+    \vspace{0.2cm}
+    {\normalsize Professional Setup for Power Users}
+}
+
 \date{\today}
 
 \begin{document}
+
+% Custom title page
 \begin{titlepage}
-  \centering
-  \vspace*{1.4cm}
-  {\Huge\bfseries\color{deepred} The Ultimate \vivaldi{} Setup\\[-2pt]\normalsize(Compact)}\\[8pt]
-  {\large\color{textmuted} Fast, Secure, Memory-Efficient — Dark Mode Edition}\\[16pt]
-
-  % Infographic: 5-step ribbon
-  \begin{tikzpicture}[node distance=0.8cm and 0.6cm]
-    \tikzstyle{step}=[rectangle,rounded corners=4pt,minimum width=2.9cm,minimum height=0.9cm,align=center]
-    \node[step,fill=deepred!90] (s1) {1. Quick Setup};
-    \node[step,fill=panelbg,draw=deepred,below right=of s1] (s2) {2. Core Settings};
-    \node[step,fill=panelbg,draw=deepred,below right=of s2] (s3) {3. Privacy Baseline};
-    \node[step,fill=panelbg,draw=deepred,below right=of s3] (s4) {4. \youtube{} Optimize};
-    \node[step,fill=panelbg,draw=deepred,below right=of s4] (s5) {5. Maintain} ;
-    \draw[->,very thick,deepred] (s1) -- (s2);
-    \draw[->,very thick,deepred] (s2) -- (s3);
-    \draw[->,very thick,deepred] (s3) -- (s4);
-    \draw[->,very thick,deepred] (s4) -- (s5);
-  \end{tikzpicture}
-
-  \vfill
-  {\small\color{textmuted} Designed for minimal CPU wakeups, low memory footprint, and power-user control with \surfingkeys{}.}\\[6pt]
-  {\normalsize\today}
+    \centering
+    \vspace*{2cm}
+    
+    % Main title
+    {\Huge\bfseries\color{primaryblue} The Ultimate \vivaldi{} Browser Setup\par}
+    \vspace{1cm}
+    {\Large\color{darkgray} Fast, Secure, Memory-Efficient Configuration\par}
+    \vspace{0.5cm}
+    {\large\color{darkgray} with \surfingkeys{} and Advanced \youtube{} Optimization\par}
+    
+    \vspace{2cm}
+    
+    % Features highlight
+    \begin{tikzpicture}
+        \node[
+            draw=primaryblue,
+            thick,
+            rounded corners=5pt,
+            fill=lightgray,
+            text width=10cm,
+            align=center,
+            inner sep=15pt
+        ] {
+            \textbf{\large Key Features:}\\[0.5em]
+            $\bullet$ Minimal CPU wakeups and memory footprint\\
+            $\bullet$ Strong privacy and security hardening\\
+            $\bullet$ Power-user control with \surfingkeys{}\\
+            $\bullet$ Optimized \youtube{} performance\\
+            $\bullet$ Professional workflow enhancement
+        };
+    \end{tikzpicture}
+    
+    \vfill
+    
+    {\large\textbf{Advanced Browser Configuration Guide}\par}
+    \vspace{0.3cm}
+    {\normalsize For Windows, macOS, and Linux\par}
+    \vspace{1cm}
+    {\large \today\par}
 \end{titlepage}
 
+% Table of contents
 \tableofcontents
 \clearpage
 
+% Overview chapter
 \chapter{Overview}
+
 \begin{tipbox}
-\textbf{Goal:} Minimal CPU wakeups, small memory footprint, junk requests eliminated, strong privacy, and keyboard-driven control with \surfingkeys{}.
+\textbf{Goal:} Achieve minimal CPU wakeups, small memory footprint, eliminate junk requests, ensure strong privacy, and provide power-user control with \surfingkeys{}.
 \end{tipbox}
 
-\begin{multicols}{2}
 \section{Philosophy}
+
+This guide follows a core philosophy of optimization:
+
 \begin{itemize}
-  \item \textbf{Native First:} Use \vivaldi{} features before extensions
-  \item \textbf{Minimal Stack:} 3--6 essential extensions only
-  \item \textbf{Modern Defaults:} Avoid obsolete flags; measure changes
-  \item \textbf{Isolation:} Separate heavy tasks into profiles/workspaces
-  \item \textbf{Iterate:} Benchmark after each tweak
+    \item \textbf{Native First:} Prefer \vivaldi{}'s built-in features over extensions
+    \item \textbf{Minimal Stack:} Keep the extension list as small as possible
+    \item \textbf{Modern Approach:} Avoid outdated flags and deprecated configurations
+    \item \textbf{Isolation Strategy:} Separate heavy tasks into different profiles and workspaces
+    \item \textbf{Iterative Testing:} Continuously test and refine the setup
 \end{itemize}
 
-\section{What You Get}
-\begin{itemize}
-  \item Fast start, snappy navigation
-  \item Low idle memory
-  \item Privacy-first configuration
-  \item Optimized \youtube{} playback
-  \item Powerful keyboard workflow
-\end{itemize}
-\end{multicols}
+\section{What You'll Achieve}
 
-\chapter{Quick Setup (15 Minutes)}
-\section{Preparation}
-\begin{enumerate}
-  \item Update \vivaldi{} to latest stable
-  \item Create a fresh profile: \menupath{Menu > Manage Profiles > Add Person}
-  \item Optional backup: bookmarks and settings
-\end{enumerate}
+By following this guide, you will configure a \vivaldi{} browser that delivers:
 
-\section{Essential UI}
-\begin{itemize}
-  \item Light theme effects off; dark UI preferred
-  \item Disable wallpapers/translucency/animations
-  \item Show address bar, hide non-essential toolbars
-  \item Optional: hide status bar for keyboard-first
-\end{itemize}
-
-\section{Core Performance}
-\begin{itemize}
-  \item Enable hardware acceleration
-  \item Disable smooth scrolling (responsiveness)
-  \item Disable page preloading
-  \item Tabs: lazy-load on restore; background hibernation 5–15 min
-\end{itemize}
-
-\section{Privacy Baseline}
-\begin{itemize}
-  \item Block third-party cookies (strict)
-  \item Secure DNS: Cloudflare 1.1.1.1, Quad9 9.9.9.9, or NextDNS
-  \item Enable HTTPS-First mode
-  \item Restrictive site permissions by default
-\end{itemize}
-
-\section{Extensions (Minimal)}
-\begin{itemize}
-  \item One blocker: \textbf{uBlock Origin} or \textbf{Vivaldi native} (not both)
-  \item \surfingkeys{}; SponsorBlock; Unhook (DF Tube); Password manager
-  \item Optional: ClearURLs (skip if NextDNS/uBO URL stripping used)
-\end{itemize}
-
-\section{GPU Video Check}
-\begin{enumerate}
-  \item Play a 4K video on \youtube{}
-  \item Right-click twice → \menupath{Stats for nerds}
-  \item Confirm \textit{Hardware decode}; CPU stays low
-\end{enumerate}
-
-\chapter{Core Settings That Matter}
-\section{Chromium Flags Reality (2025)}
-\begin{warningbox}
-Avoid outdated “speed flags”: many are default/removed or harm stability.
-\end{warningbox}
-\textbf{Avoid:} \texttt{tcp-fastopen}, \texttt{max-tiles-for-interest-area}, \texttt{num-raster-threads}, \texttt{future-v8-vm-features}, \texttt{enable-quic} (HTTP/3 is default).
-
-\textbf{Linux-only (video decode helpers):}
-\begin{itemize}
-  \item \texttt{--use-gl=egl}
-  \item \texttt{--enable-features=VaapiVideoDecodeLinuxGL}
-\end{itemize}
-
-\section{Vivaldi Settings}
 \begin{multicols}{2}
-\subsection{General}
 \begin{itemize}
-  \item Startup: Blank page or minimal Speed Dial
-  \item Disable onboarding/intro
-\end{itemize}
-
-\subsection{Webpages}
-\begin{itemize}
-  \item Hardware Acceleration: Enable
-  \item Smooth Scrolling: Disable
-  \item Block Autoplay: Enable
-  \item Page Prediction/Preload: Disable
-\end{itemize}
-
-\subsection{Privacy/Security}
-\begin{itemize}
-  \item Third-party cookies: Block
-  \item Secure DNS: Fast resolver (Cloudflare/Quad9/NextDNS)
-  \item Sensitive permissions: Ask/Block
-\end{itemize}
-
-\subsection{Tabs}
-\begin{itemize}
-  \item Lazy restore; hibernate background tabs
-  \item Compact Tab Stacks; thumbnails off
+    \item Lightning-fast startup and navigation
+    \item Minimal memory consumption
+    \item Enhanced privacy protection
+    \item Professional keyboard-driven workflow
+    \item Optimized multimedia performance
+    \item Streamlined \youtube{} experience
+    \item Advanced tab and workspace management
+    \item Robust security hardening
 \end{itemize}
 \end{multicols}
 
-\section{Optional Switches (Test Carefully)}
+\chapter{Quick Setup (15-20 Minutes)}
+
+This chapter provides a rapid deployment path to get your optimized \vivaldi{} browser running quickly.
+
+\section{Initial Preparation}
+
+\begin{enumerate}
+    \item \textbf{Update \vivaldi{}:} Ensure you're running the latest stable version
+    \item \textbf{Fresh Profile:} Navigate to \menupath{Menu > Manage Profiles > Add Person} for a clean slate
+    \item \textbf{Backup:} Export your current bookmarks and settings if needed
+\end{enumerate}
+
+\section{Essential UI Configuration}
+
+\subsection{Appearance Settings (\menupath{Settings > Appearance})}
+
+\begin{itemize}
+    \item Use a plain, lightweight theme
+    \item Disable background images and translucency effects
+    \item Turn off window animations for maximum responsiveness
+    \item Show address bar and minimal toolbars only
+    \item Hide status bar if you prefer keyboard-driven navigation
+\end{itemize}
+
+\begin{warningbox}
+\textbf{Performance Note:} Visual effects like animations and transparency can significantly impact browser responsiveness, especially on older hardware.
+\end{warningbox}
+
+\section{Core Performance Settings}
+
+\subsection{Webpages and Privacy (\menupath{Settings > Webpages and Privacy})}
+
+\begin{itemize}
+    \item \textbf{Enable hardware acceleration} (crucial for video performance)
+    \item \textbf{Disable smooth scrolling} for maximum responsiveness
+    \item \textbf{Disable page preloading:} Turn off both "Preload pages" and "Preload Top Sites"
+    \item \textbf{GPU rasterization:} Leave at default (already optimized in modern Chromium)
+\end{itemize}
+
+\subsection{Tab Configuration (\menupath{Settings > Tabs})}
+
+\begin{itemize}
+    \item Enable \textbf{lazy loading} for restored tabs
+    \item Set \textbf{background tab hibernation} to 5-15 minutes
+    \item Use \textbf{compact tab display} without thumbnails
+    \item Enable hibernation in Quick Commands for manual control
+\end{itemize}
+
+\section{Privacy Fundamentals}
+
+\begin{itemize}
+    \item \textbf{Block third-party cookies} (strict mode)
+    \item Configure \textbf{secure DNS:} Use Cloudflare (1.1.1.1), Quad9 (9.9.9.9), or NextDNS
+    \item Enable \textbf{HTTPS-First mode} for secure connections
+    \item Set site permissions to restrictive defaults
+\end{itemize}
+
+\section{Essential Extensions}
+
+\begin{tipbox}
+\textbf{Extension Philosophy:} Install only what you absolutely need. Every extension adds overhead.
+\end{tipbox}
+
+\subsection{Primary Ad/Tracker Blocking (Choose One)}
+
+\begin{itemize}
+    \item \textbf{Option A (Performance-minimal):} Use \vivaldi{}'s built-in tracker/ad blocker
+    \item \textbf{Option B (Privacy-maximum):} Install \extension{uBlock Origin} and disable \vivaldi{}'s blocker
+\end{itemize}
+
+\subsection{Core Extensions}
+
+\begin{enumerate}
+    \item \extension{\surfingkeys{}} (keyboard navigation powerhouse)
+    \item \extension{SponsorBlock} (skip \youtube{} sponsors/intros)
+    \item \extension{Unhook (DF Tube)} (clean \youtube{} interface)
+    \item \extension{ClearURLs} (optional, removes tracking parameters)
+    \item Password manager: \extension{Bitwarden} or \extension{1Password}
+\end{enumerate}
+
+\subsection{Optional \youtube{} Extensions}
+
+\begin{itemize}
+    \item \extension{Return \youtube{} Dislike} (restore dislike counts)
+    \item \extension{h264ify} or \extension{Enhanced h264/AV1} (only if GPU lacks AV1 decode)
+\end{itemize}
+
+\section{Hardware Video Verification}
+
+To verify optimal \youtube{} performance:
+
+\begin{enumerate}
+    \item Play a 4K video on \youtube{}
+    \item Right-click twice on the video
+    \item Select \menupath{Stats for nerds}
+    \item Confirm "Hardware decode" is active and CPU usage is low
+\end{enumerate}
+
+\chapter{Core Settings for Speed, Memory, and Reliability}
+
+\section{Chromium Flags Reality Check (2025)}
+
+\begin{warningbox}
+\textbf{Important:} Many "speed" flags from older guides are now default, removed, or counterproductive. Avoid random flag tweaking as flags change frequently and can reduce stability.
+\end{warningbox}
+
+\subsection{Flags to Avoid}
+
+The following flags are \textbf{no longer recommended} or are already default:
+
+\begin{itemize}
+    \item \flag{tcp-fastopen}
+    \item \flag{max-tiles-for-interest-area}
+    \item \flag{num-raster-threads}
+    \item \flag{future-v8-vm-features}
+    \item \flag{enable-quic} (QUIC/HTTP/3 is default)
+\end{itemize}
+
+\subsection{Safe Flags (Linux Only)}
+
+For Linux users, these flags may help with video decode:
+
+\begin{itemize}
+    \item \flag{use-gl=egl}
+    \item \flag{enable-features=VaapiVideoDecodeLinuxGL}
+\end{itemize}
+
+\section{Updated \vivaldi{} Performance Settings}
+
+\subsection{General Settings (\menupath{Settings > General})}
+
+\begin{itemize}
+    \item \textbf{Startup:} Open blank page or minimal Speed Dial
+    \item \textbf{Disable:} "Show Intro" and onboarding processes
+    \item \textbf{Page Loading:} Turn off heavy start pages
+\end{itemize}
+
+\subsection{Advanced Webpage Settings (\menupath{Settings > Webpages})}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Setting} & \textbf{Recommendation} \\
+\midrule
+Hardware Acceleration & Enable \\
+Smooth Scrolling & Disable (for responsiveness) \\
+Block Autoplay & Enable (reduces CPU/memory) \\
+Page Prediction & Disable all forms \\
+\bottomrule
+\end{tabular}
+\caption{Core Webpage Performance Settings}
+\end{table}
+
+\subsection{Privacy and Security Hardening (\menupath{Settings > Privacy and Security})}
+
+\begin{itemize}
+    \item \textbf{Page Preloading:} Disable "Preload pages for faster browsing"
+    \item \textbf{Cookies:} Block third-party cookies (strict)
+    \item \textbf{DNS:} Configure secure DNS with fast resolver
+    \item \textbf{Site Permissions:} Default to Ask/Block for all sensitive permissions
+\end{itemize}
+
+\begin{tipbox}
+\textbf{DNS Recommendations:}
+\begin{itemize}
+    \item \textbf{Cloudflare:} 1.1.1.1 (fastest, privacy-focused)
+    \item \textbf{Quad9:} 9.9.9.9 (security-focused, malware blocking)
+    \item \textbf{NextDNS:} Custom filtering and analytics
+\end{itemize}
+\end{tipbox}
+
+\subsection{Tab Management (\menupath{Settings > Tabs})}
+
+\begin{itemize}
+    \item \textbf{Lazy Loading:} Enable for restored tabs
+    \item \textbf{Hibernation:} Enable for background tabs
+    \item \textbf{Display:} Use Tab Stacks with Compact view
+    \item \textbf{Thumbnails:} Disable to reduce memory usage
+\end{itemize}
+
+\section{Native vs Extension Features}
+
+\subsection{Prefer \vivaldi{} Native Features}
+
+\begin{multicols}{2}
+\begin{itemize}
+    \item Tab hibernation
+    \item Session management
+    \item Workspaces
+    \item Notes system
+    \item Reader mode
+    \item Built-in ad/tracker blocking
+    \item Sync capabilities
+    \item Screenshot tools
+\end{itemize}
+\end{multicols}
+
+\subsection{Avoid Redundant Extensions}
+
+Do not install extensions that duplicate \vivaldi{}'s native functionality:
+
+\begin{itemize}
+    \item \extension{The Great Suspender} (use native hibernation)
+    \item Multiple ad blockers (choose one blocking solution)
+    \item \extension{Privacy Badger}/\extension{Ghostery} (redundant with uBlock Origin)
+    \item Heavy new-tab pages (use \vivaldi{}'s Speed Dial)
+\end{itemize}
+
+\section{Optional Command-Line Switches}
+
+For advanced users, these stable switches can reduce background activity:
+
 \begin{codebox}
 \begin{lstlisting}[language=bash]
 --disable-features=PreloadMediaEngagementData,PreloadMediaData
@@ -341,206 +541,1514 @@ Avoid outdated “speed flags”: many are default/removed or harm stability.
 \end{lstlisting}
 \end{codebox}
 
-\chapter{Privacy and Extensions}
-\section{Blocking Strategy}
-\textbf{Lightweight:} Vivaldi native blocker (add EasyPrivacy).\\
-\textbf{Maximum control:} uBlock Origin; enable default lists + uBO privacy; add regionals as needed.
+\begin{warningbox}
+\textbf{Testing Required:} Always test these switches with your workflow, especially with Google Workspace apps like Docs and Meet.
+\end{warningbox}
 
-\section{WebRTC and HTTPS}
+\chapter{Privacy and Security Hardening}
+
+\section{Tracking Protection Strategy}
+
+\subsection{Blocking Options (Choose One)}
+
+\textbf{Option A: Lightweight Approach}
 \begin{itemize}
-  \item Use native \textit{Always use secure connections}; HTTPS Everywhere is obsolete
-  \item For VPN/proxy/Tor: add \extension{WebRTC Control} or set enterprise policy
+    \item Use \vivaldi{}'s built-in tracker/ad blocker
+    \item Enable default lists plus EasyPrivacy
+    \item Minimal CPU overhead
+    \item Good for everyday browsing
 \end{itemize}
 
-\section{Password Managers}
+\textbf{Option B: Maximum Privacy}
+\begin{itemize}
+    \item Install \extension{uBlock Origin}
+    \item Disable \vivaldi{}'s built-in blocker
+    \item Enable EasyList, EasyPrivacy, uBO Privacy filters
+    \item Add regional filter lists as needed
+    \item Enable "Advanced user" mode for custom rules
+\end{itemize}
+
+\subsection{URL Parameter Cleaning}
+
+\extension{ClearURLs} removes tracking parameters from URLs automatically. Skip if using:
+\begin{itemize}
+    \item NextDNS with parameter stripping enabled
+    \item uBlock Origin with URL normalization
+\end{itemize}
+
+\section{Connection Security}
+
+\subsection{HTTPS Configuration}
+
+\begin{itemize}
+    \item \extension{HTTPS Everywhere} is obsolete
+    \item Use browser's native "Always use secure connections"
+    \item Enable HTTPS-First mode in settings
+\end{itemize}
+
+\subsection{WebRTC IP Leak Prevention}
+
+For VPN/proxy/Tor users:
+
+\begin{itemize}
+    \item Install \extension{WebRTC Control} extension
+    \item Alternative: Set "WebRTC IP Handling Policy" via enterprise policy
+    \item Prevents local IP address leaks
+\end{itemize}
+
+\section{Password Management}
+
+\subsection{Recommended Managers}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Manager} & \textbf{Pros} & \textbf{Cons} \\
+\midrule
+\extension{Bitwarden} & Open source, affordable & Limited advanced features \\
+\extension{1Password} & Feature-rich, family sharing & More expensive \\
+\vivaldi{} Built-in & Integrated, fast & Limited cross-platform sync \\
+\bottomrule
+\end{tabular}
+\caption{Password Manager Comparison}
+\end{table}
+
+\subsection{Security Configuration}
+
+\begin{itemize}
+    \item \textbf{Disable auto-fill on page load} (phishing protection)
+    \item \textbf{Require click/shortcut} for auto-fill
+    \item \textbf{Enable two-factor authentication} for password manager
+    \item \textbf{Regular security audits} of stored passwords
+\end{itemize}
+
+\section{Cookie and Storage Management}
+
+\subsection{Cookie Policy}
+
+\begin{itemize}
+    \item \textbf{Block third-party cookies} universally
+    \item \textbf{Clear on close:} Enable for sensitive profiles
+    \item \textbf{Site-specific exceptions:} Allow only when necessary
+    \item \textbf{SameSite enforcement:} Leave at browser default
+\end{itemize}
+
+\section{DNS Privacy Enhancement}
+
+\subsection{NextDNS Custom Configuration}
+
+NextDNS provides advanced privacy features:
+
 \begin{multicols}{2}
 \begin{itemize}
-  \item \extension{Bitwarden}: open source, affordable
-  \item \extension{1Password}: feature-rich (costly)
-  \item Vivaldi built-in: integrated, basic
-\end{itemize}
-\columnbreak
-\textbf{Hygiene:}
-\begin{itemize}
-  \item Disable auto-fill on page load
-  \item Require shortcut/click for fill
-  \item Enable 2FA; audit regularly
+    \item Per-device allow/block lists
+    \item Real-time ad/tracker blocking
+    \item ECS (EDNS Client Subnet) privacy
+    \item Detailed analytics and logs
+    \item Custom domain filtering
+    \item Malware and phishing protection
 \end{itemize}
 \end{multicols}
 
-\section{Extension Discipline}
+\section{Tor-like Browsing Setup}
+
+\begin{warningbox}
+\textbf{Security Note:} For high-risk activities, use the official Tor Browser instead of routing \vivaldi{} through Tor.
+\end{warningbox}
+
+\subsection{Tor Routing Configuration}
+
+If you must use \vivaldi{} with Tor:
+
+\begin{enumerate}
+    \item Run Tor daemon locally
+    \item Install \extension{Proxy SwitchyOmega}
+    \item Configure SOCKS5 proxy: 127.0.0.1:9050
+    \item Install \extension{WebRTC Control} (prevent IP leaks)
+    \item Use dedicated \vivaldi{} profile for Tor browsing
+    \item Expect reduced performance and potential site breakage
+\end{enumerate}
+
+\chapter{Smart Extension Stack}
+
+\section{Extension Philosophy}
+
+\begin{tipbox}
+\textbf{Key Principle:} Every extension adds content scripts, memory usage, and event listeners. Minimize ruthlessly.
+\end{tipbox}
+
+\section{Core Extension Recommendations}
+
+\subsection{Primary Blocking (Choose One Only)}
+
+\textbf{\extension{uBlock Origin} (Full Control)}
 \begin{itemize}
-  \item Site access: On click where possible
-  \item No multiple blockers simultaneously
-  \item Monthly audit in \keystroke{chrome://extensions}
+    \item Complete ad/tracker blocking control
+    \item Custom filter creation
+    \item Element picker and logger
+    \item Advanced user mode available
+    \item Resource: 20-50MB RAM typical
 \end{itemize}
 
-\chapter{\youtube{} Performance and UX}
-\section{Hardware Decode}
-\textbf{Windows/macOS:} Should work out of the box; keep GPU drivers updated.\\
-\textbf{Linux:} Install codecs (e.g., \texttt{chromium-codecs-ffmpeg-extra}; distro-specific). Check \keystroke{chrome://gpu}.
+\textbf{\vivaldi{} Native Blocker (Lightweight)}
+\begin{itemize}
+    \item Built-in optimization
+    \item Minimal resource usage
+    \item Default filter lists included
+    \item Less customization available
+    \item Resource: 5-15MB RAM typical
+\end{itemize}
 
-\section{Codec Strategy}
+\subsection{Essential Power-User Tools}
+
+\begin{enumerate}
+    \item \textbf{\extension{\surfingkeys{}}} — Keyboard navigation powerhouse
+    \item \textbf{Password Manager} — \extension{Bitwarden} or \extension{1Password}
+    \item \textbf{\extension{ClearURLs}} — Tracking parameter removal (optional)
+\end{enumerate}
+
+\section{\youtube{} Optimization Stack}
+
+\subsection{Performance-First Extensions}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Extension} & \textbf{Function} & \textbf{Impact} & \textbf{RAM Usage} \\
+\midrule
+\extension{SponsorBlock} & Skip sponsors/intros & High QoL & 10-15MB \\
+\extension{Unhook (DF Tube)} & Hide feeds/distractions & CPU reduction & 5-10MB \\
+\extension{Return YT Dislike} & Restore dislike counts & Minimal & 2-5MB \\
+\extension{h264ify} & Force H.264 codec & GPU dependent & 1-3MB \\
+\bottomrule
+\end{tabular}
+\caption{\youtube{} Extension Performance Impact}
+\end{table}
+
+\subsection{Codec Strategy Decision Tree}
+
 \begin{tikzpicture}[
-  node distance=1.6cm and 2.2cm,
-  decision/.style={diamond, draw=deepred, thick, fill=panelbg, text width=2.5cm, align=center},
-  action/.style={rectangle, draw=rulemuted, thick, fill=panelbg, text width=3.2cm, align=center},
-  arrow/.style={->, thick, color=deepred}
+    node distance=2cm and 3cm,
+    decision/.style={diamond, draw=primaryblue, thick, fill=lightgray, text width=2cm, align=center},
+    action/.style={rectangle, draw=darkgray, thick, fill=lightgray, text width=2.5cm, align=center},
+    arrow/.style={->, thick, color=primaryblue}
 ]
-\node[decision] (gpu) {GPU supports AV1?};
+
+\node[decision] (gpu) {GPU supports AV1 decode?};
 \node[action, below left=of gpu] (h264) {Install h264ify\\Force H.264};
-\node[action, below right=of gpu] (av1) {Use AV1\\No codec ext.};
+\node[action, below right=of gpu] (av1) {Keep AV1\\No codec extension};
+
 \draw[arrow] (gpu) -- node[above left] {No} (h264);
 \draw[arrow] (gpu) -- node[above right] {Yes} (av1);
+
 \end{tikzpicture}
 
-\section{Interface Cleanup (Unhook)}
-Hide: Home feed, comments, end-screen, Shorts, Up-next, and autoplay. Reduces CPU/DOM work noticeably.
+\section{Extensions to Avoid}
 
-\section{uBO Filters (Focused)}
-Keep defaults; avoid heavy third-party YT filters. Use a few custom rules:
+\subsection{Redundant/Risky Extensions}
+
+\begin{itemize}
+    \item \textbf{\extension{Ghostery}, \extension{Privacy Badger}} — Redundant with uBlock Origin
+    \item \textbf{\extension{Decentraleyes}/\extension{LocalCDN}} — Minimal benefit, potential breakage
+    \item \textbf{\extension{The Great Suspender}} — Risky and unnecessary (use native hibernation)
+    \item \textbf{Heavy new-tab pages} — \extension{Momentum}, etc. (use blank NTP)
+    \item \textbf{Multiple ad blockers} — CPU overhead, potential conflicts
+\end{itemize}
+
+\section{Extension Configuration Best Practices}
+
+\subsection{Site Access Management}
+
+For each extension:
+
+\begin{itemize}
+    \item Set \textbf{"Site access: On click"} whenever possible
+    \item Disable \textbf{"Allow in private"} unless essential
+    \item Use \textbf{site-specific permissions} for \youtube{}-only tools
+    \item Regular audit: \keystroke{chrome://extensions}
+\end{itemize}
+
+\subsection{Monthly Extension Audit}
+
+\begin{enumerate}
+    \item Review extension list in \keystroke{chrome://extensions}
+    \item Remove extensions unused in the past month
+    \item Check for updates and security notices
+    \item Verify permissions haven't expanded
+    \item Test core functionality after removals
+\end{enumerate}
+
+\chapter{\youtube{} Performance and UX Tuning}
+
+\section{Hardware Video Decode Optimization}
+
+\subsection{Platform-Specific Setup}
+
+\textbf{Windows and macOS:}
+\begin{itemize}
+    \item Hardware decode should work automatically
+    \item Update GPU drivers regularly
+    \item Verify with "Stats for nerds" in \youtube{} videos
+    \item Look for "Hardware decode" status and low dropped frames
+\end{itemize}
+
+\textbf{Linux:}
+\begin{itemize}
+    \item Install proprietary ffmpeg codecs
+    \item Use distribution's chromium-ffmpeg package
+    \item Configure command-line switches (see Advanced chapter)
+    \item Check \keystroke{chrome://gpu} for decode status
+\end{itemize}
+
+\subsection{Video Decode Verification}
+
+To verify optimal hardware acceleration:
+
+\begin{enumerate}
+    \item Play a 4K \youtube{} video
+    \item Right-click video twice
+    \item Select \menupath{Stats for nerds}
+    \item Verify:
+    \begin{itemize}
+        \item "Hardware decode" shows active status
+        \item Dropped frames remain minimal
+        \item CPU usage stays low during playback
+        \item Buffer health remains stable
+    \end{itemize}
+\end{enumerate}
+
+\section{Interface Optimization with \extension{Unhook}}
+
+\subsection{Recommended \extension{Unhook} Configuration}
+
+Configure \extension{Unhook (DF Tube)} to hide performance-draining elements:
+
+\begin{itemize}
+    \item \textbf{Hide Home feed} — Eliminates infinite scroll CPU usage
+    \item \textbf{Hide comments section} — Reduces DOM complexity
+    \item \textbf{Hide end-screen suggestions} — Prevents auto-loading content
+    \item \textbf{Hide \youtube{} Shorts} — Blocks resource-heavy short videos
+    \item \textbf{Hide "Up next" sidebar} — Reduces memory usage
+    \item \textbf{Disable autoplay} — Prevents unwanted video loading
+\end{itemize}
+
+\begin{tipbox}
+\textbf{Performance Impact:} These changes can reduce \youtube{} memory usage by 30-50\% and significantly decrease CPU background activity.
+\end{tipbox}
+
+\section{Advanced \extension{uBlock Origin} \youtube{} Tuning}
+
+\subsection{Filter List Optimization}
+
+For \youtube{} specifically:
+
+\begin{itemize}
+    \item Keep default filter lists active
+    \item Avoid complex third-party \youtube{} script-blocking filters
+    \item Use element picker for custom blocking rather than heavy filter subscriptions
+    \item Test site functionality after adding custom filters
+\end{itemize}
+
+\subsection{Custom \youtube{} Filters}
+
+Useful \extension{uBlock Origin} custom filters for \youtube{}:
+
 \begin{codebox}
 \begin{lstlisting}
 ! Hide YouTube shorts shelf
 youtube.com##[is-shorts]:upward(ytd-rich-shelf-renderer)
+
 ! Hide end screen elements
 youtube.com##.ytp-endscreen-content
-! Trim tracking endpoints
+
+! Block YouTube tracking parameters
 ||youtube.com/api/stats/ads$xhr
 ||youtube.com/api/stats/watchtime$xhr
 \end{lstlisting}
 \end{codebox}
 
-\chapter{Workspaces, Profiles, and Keys}
-\section{Workspaces}
-\begin{multicols}{2}
-\textbf{Work:} Web apps, mail, docs; minimal extensions.\\
-\textbf{Media:} \youtube{} + streaming; SponsorBlock/Unhook; shorter hibernation.\\
-\textbf{Research:} Tab Stacks by topic; sessions enabled.\\
-\textbf{Personal:} Social, shopping; relaxed privacy.
-\end{multicols}
+\section{Playback Quality Strategy}
 
-\section{Profiles}
+\subsection{Resolution and Codec Guidelines}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{GPU Capability} & \textbf{Max Resolution} & \textbf{Recommended Codec} & \textbf{Extension} \\
+\midrule
+No hardware decode & 1080p & H.264 & h264ify \\
+Basic hardware decode & 1440p & H.264 & h264ify \\
+Modern GPU (2020+) & 4K & AV1 & None needed \\
+High-end GPU (2022+) & 8K & AV1 & None needed \\
+\bottomrule
+\end{tabular}
+\caption{\youtube{} Playback Optimization by Hardware}
+\end{table}
+
+\subsection{Playback Settings}
+
+Optimize \youtube{} playback settings:
+
 \begin{itemize}
-  \item Everyday: uBO + \surfingkeys{} + password manager
-  \item Media: add SponsorBlock, Unhook, codec ext if needed
-  \item Sensitive: zero/minimal extensions; strict privacy; clear on close
+    \item \textbf{Disable "Inline miniplayer"} — Reduces background processing
+    \item \textbf{Turn off "Autoplay"} — Prevents unwanted loading
+    \item \textbf{Set default quality} based on your hardware capability
+    \item \textbf{Disable "Annotations"} — Less DOM manipulation
 \end{itemize}
 
-\section{Keyboard Split}
-\textbf{Vivaldi:} window/tab ops (\keystroke{F2}, \keystroke{Ctrl+L}, \keystroke{Ctrl+W}, workspaces).\\
-\textbf{\surfingkeys{}:} page navigation (\keystroke{j/k}, \keystroke{f/F}), selection/copy, site shortcuts.
+\chapter{Tabs, Workspaces, and Profiles Strategy}
 
-\section{\surfingkeys{} Minimal Starter}
-\begin{codebox}
-\begin{lstlisting}[language=JavaScript]
-settings.defaultSearchEngine = "d";
-settings.smoothScroll = false; // perf
-settings.hintAlign = "left";
-settings.scrollStepSize = 70;
-api.Hints.characters = 'arstneio';
+\section{Workspace Architecture}
 
-addSearchAliasX('d','DuckDuckGo','https://duckduckgo.com/?q=');
-addSearchAliasX('g','Google','https://www.google.com/search?q=');
-addSearchAliasX('yt','YouTube','https://www.youtube.com/results?search_query=');
+\subsection{Strategic Workspace Division}
 
-mapkey('f','Open link', () => Hints.create("", Hints.dispatchMouseClick));
-mapkey('F','Open bg', () => Hints.create("", a => openLink(a,{tabbed:true,active:false})));
-map('H','S'); map('L','D'); map('J','R'); map('K','E');
+Organize your browsing into logical workspaces:
 
-const isYouTube = /(^|\.)youtube\.com$/i.test(location.hostname);
-if (isYouTube) {
-  mapkey('yt','Toggle theater', () => document.querySelector('button.ytp-size-button')?.click());
-  mapkey('ys','Focus search', () => { const s=document.querySelector('#search'); s?.focus(); s?.select(); });
-}
-
-settings.blocklist = [
-  'https://docs.google.com/*','https://mail.google.com/*','https://app.slack.com/*'
-];
-\end{lstlisting}
-\end{codebox}
-
-\chapter{Monitoring and Maintenance}
-\section{Built-in Tools}
-\begin{multicols}{2}
-\begin{itemize}
-  \item Task Manager (\keystroke{Shift+Esc})
-  \item vivaldi://discards (hibernation)
-  \item vivaldi://gpu (acceleration)
-  \item chrome://media-internals (decode)
-  \item DevTools Performance (\keystroke{F12})
-\end{itemize}
-\columnbreak
-\textbf{Benchmarks:}
-\begin{itemize}
-  \item Speedometer 3
-  \item MotionMark
-  \item JetStream
-\end{itemize}
-\end{multicols}
-
-\section{Lightweight Maintenance}
-\begin{itemize}
-  \item Daily: restart browser; close/hibernate old stacks
-  \item Weekly: clear data (\keystroke{Ctrl+Shift+Delete}); update browser/extensions
-  \item Monthly: extension audit; run privacy tests; GPU driver update
-\end{itemize}
-
-\chapter{Troubleshooting (Quick)}
-\section{Feels Slow}
 \begin{enumerate}
-  \item Task Manager: sort CPU/memory; close outliers
-  \item Disable extensions; re-enable one by one
-  \item Toggle hardware acceleration; update GPU drivers
+    \item \textbf{Work Workspace}
+    \begin{itemize}
+        \item Professional web apps
+        \item Email and communication
+        \item Documentation and research
+        \item Minimal extensions active
+    \end{itemize}
+    
+    \item \textbf{Media Workspace}
+    \begin{itemize}
+        \item \youtube{} and streaming services
+        \item Music and podcast platforms
+        \item \youtube{}-specific extensions enabled
+        \item Hibernation set to shorter intervals
+    \end{itemize}
+    
+    \item \textbf{Research Workspace}
+    \begin{itemize}
+        \item Academic and technical resources
+        \item Multiple tab stacks for different topics
+        \item Session saving enabled for long-term projects
+        \item Reference management tools
+    \end{itemize}
+    
+    \item \textbf{Personal Workspace}
+    \begin{itemize}
+        \item Social media and personal sites
+        \item Shopping and entertainment
+        \item Relaxed privacy settings if desired
+    \end{itemize}
 \end{enumerate}
 
-\section{High YT CPU}
+\section{Profile Isolation Strategy}
+
+\subsection{Multi-Profile Setup}
+
+Create specialized profiles for different use cases:
+
+\textbf{Profile A: Everyday Browsing}
 \begin{itemize}
-  \item Ensure hardware decode; drop resolution temporarily
-  \item Install h264ify if no AV1 decode
-  \item Use Unhook to hide heavy UI
+    \item Core extensions: \extension{uBlock Origin} + \extension{\surfingkeys{}} + Password manager
+    \item Standard privacy settings
+    \item General bookmarks and history
+    \item Default workspace configuration
 \end{itemize}
 
-\section{Sites Break}
+\textbf{Profile B: Media Consumption}
+\begin{itemize}
+    \item Add \extension{SponsorBlock}, \extension{Unhook}, codec extensions
+    \item Optimized for video performance
+    \item Separate bookmark collection
+    \item Media-focused workspace layouts
+\end{itemize}
+
+\textbf{Profile C: High-Security/Sensitive}
+\begin{itemize}
+    \item Minimal or zero extensions
+    \item Strictest privacy settings
+    \item Clear data on browser close
+    \item VPN/Tor routing if required
+    \item No persistent storage or history
+\end{itemize}
+
+\section{Tab Management Excellence}
+
+\subsection{Tab Stack Organization}
+
+Use \vivaldi{}'s Tab Stacks effectively:
+
+\begin{itemize}
+    \item \textbf{Project-based stacking} — Group related research tabs
+    \item \textbf{Time-based stacking} — Stack tabs by urgency/deadlines  
+    \item \textbf{Context switching} — Hibernate entire stacks when switching focus
+    \item \textbf{Stack naming} — Use descriptive names for easy identification
+\end{itemize}
+
+\subsection{Session Management}
+
+Leverage \vivaldi{}'s native session features:
+
 \begin{enumerate}
-  \item Temporarily disable blocker for that site
-  \item Clear site storage; try incognito
-  \item Check DNS/VPN; test another network
+    \item \textbf{Save themed sessions} — Create session templates for recurring work
+    \item \textbf{Regular session exports} — Backup important tab configurations
+    \item \textbf{Cross-device sync} — Access sessions across multiple computers
+    \item \textbf{Emergency recovery} — Quick restoration of accidentally closed sessions
 \end{enumerate}
 
-\chapter{Appendix}
-\section{Linux Video (Quick)}
+\subsection{Tab Discipline Best Practices}
+
+\begin{itemize}
+    \item \textbf{Bookmark, don't hoard} — Save interesting links for later rather than keeping tabs open
+    \item \textbf{Daily tab audits} — Close tabs no longer actively needed
+    \item \textbf{Use Quick Commands} (\keystroke{F2}) for navigation instead of maintaining numerous tabs
+    \item \textbf{Regular hibernation} — Use \keystroke{Quick Commands > hibernate} frequently
+    \item \textbf{Set hibernation triggers} — Configure automatic hibernation after inactivity periods
+\end{itemize}
+
+\chapter{Advanced Configuration}
+
+\section{Hardware Video Decode (Linux)}
+
+\subsection{Linux-Specific Setup}
+
+Linux users need additional configuration for optimal video performance:
+
+\textbf{Install Required Packages:}
 \begin{codebox}
 \begin{lstlisting}[language=bash]
 # Ubuntu/Debian
 sudo apt install chromium-codecs-ffmpeg-extra
+
 # Fedora
 sudo dnf install chromium-libs-media-freeworld
-# Arch
-sudo pacman -S chromium-widevine
 
-# Wayland (test)
-vivaldi --use-gl=egl --enable-features=VaapiVideoDecodeLinuxGL --ozone-platform=wayland
+# Arch Linux
+sudo pacman -S chromium-widevine
 \end{lstlisting}
 \end{codebox}
 
-\section{Expected Improvements}
-\begin{center}
+\textbf{Command-Line Switches:}
+\begin{codebox}
+\begin{lstlisting}[language=bash]
+# Standard setup
+vivaldi --use-gl=egl --enable-features=VaapiVideoDecodeLinuxGL
+
+# For Wayland users
+vivaldi --use-gl=egl --enable-features=VaapiVideoDecodeLinuxGL \
+        --ozone-platform=wayland
+\end{lstlisting}
+\end{codebox}
+
+\subsection{Verification and Troubleshooting}
+
+Check video acceleration status:
+
+\begin{enumerate}
+    \item Navigate to \keystroke{chrome://gpu}
+    \item Look for "Video Acceleration Information"
+    \item Verify "Decode" entries show "Hardware accelerated"
+    \item Test with \keystroke{chrome://media-internals}
+\end{enumerate}
+
+\begin{warningbox}
+\textbf{Troubleshooting:} If hardware acceleration fails, revert the command-line switches and use software decoding to maintain stability.
+\end{warningbox}
+
+\section{Command-Line Optimization Switches}
+
+\subsection{Stability-Friendly Options}
+
+For advanced users, these switches can improve performance:
+
+\begin{codebox}
+\begin{lstlisting}[language=bash]
+# Reduce background networking
+--disable-background-networking
+
+# Disable sync processes
+--disable-sync
+
+# Reduce media preloading
+--disable-features=PreloadMediaEngagementData,PreloadMediaData
+
+# Memory optimization
+--max_old_space_size=2048
+
+# Network optimization
+--aggressive-cache-discard
+\end{lstlisting}
+\end{codebox}
+
+\subsection{Switch Testing Protocol}
+
+When testing command-line switches:
+
+\begin{enumerate}
+    \item Add switches one at a time
+    \item Test with your most frequently used web applications
+    \item Verify Google Workspace functionality (Docs, Sheets, Meet)
+    \item Check video conferencing platforms
+    \item Monitor for unexpected behavior over several days
+    \item Remove switches that cause issues
+\end{enumerate}
+
+\section{Custom CSS Modifications}
+
+\subsection{Lightweight Performance CSS}
+
+Create performance-focused custom CSS:
+
+\begin{codebox}
+\begin{lstlisting}[language=css]
+/* Disable animations for performance */
+*, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+}
+
+/* Reduce visual effects */
+.toolbar {
+    box-shadow: none !important;
+}
+
+/* Minimal tab styling */
+.tab-header {
+    background: linear-gradient(transparent, transparent) !important;
+}
+
+/* Hide unnecessary UI elements */
+.status-toolbar {
+    display: none !important;
+}
+\end{lstlisting}
+\end{codebox}
+
+Enable custom CSS:
+\begin{enumerate}
+    \item Go to \menupath{Settings > Appearance}
+    \item Enable "Allow CSS Modifications"
+    \item Create and save your CSS file
+    \item Apply and restart \vivaldi{}
+\end{enumerate}
+
+\section{Keyboard Workflow Integration}
+
+\subsection{\vivaldi{} vs \surfingkeys{} Key Management}
+
+Strategic key binding separation:
+
+\textbf{\vivaldi{} Handles:}
+\begin{itemize}
+    \item Global window management (\keystroke{F2}, \keystroke{Ctrl+L})
+    \item Tab operations (\keystroke{Ctrl+W}, \keystroke{Ctrl+Tab})
+    \item Browser-level functions (\keystroke{Ctrl+Shift+Delete})
+    \item Workspace switching
+\end{itemize}
+
+\textbf{\surfingkeys{} Handles:}
+\begin{itemize}
+    \item Page-level navigation (\keystroke{j/k} scrolling)
+    \item Link hints (\keystroke{f} for links)
+    \item Text selection and copying
+    \item Site-specific shortcuts
+    \item Search engine integration
+\end{itemize}
+
+\subsection{Conflict Resolution}
+
+To avoid key binding conflicts:
+
+\begin{enumerate}
+    \item Disable overlapping shortcuts in \vivaldi{} settings
+    \item Use \surfingkeys{} blacklist for web applications
+    \item Test key bindings after configuration changes
+    \item Document your custom key mappings
+\end{enumerate}
+
+\chapter{Monitoring, Benchmarking, and Maintenance}
+
+\section{Built-in Monitoring Tools}
+
+\subsection{Essential Monitoring Interfaces}
+
+\vivaldi{} provides several built-in tools for performance monitoring:
+
+\begin{table}[h]
+\centering
 \begin{tabular}{@{}lll@{}}
 \toprule
-\textbf{Metric} & \textbf{Before} & \textbf{After} \\
+\textbf{Tool} & \textbf{Access} & \textbf{Purpose} \\
 \midrule
-Startup & 3–5 s & 1–2 s \\
-Idle RAM & 500MB+ & 200–300MB \\
-YT CPU & 40–60\% & 10–20\% (HW decode) \\
-Extensions & 10–20 & 3–6 essential \\
+Task Manager & \keystroke{Shift+Esc} & Memory and CPU monitoring \\
+Tab Discards & \keystroke{vivaldi://discards} & Hibernation status \\
+GPU Status & \keystroke{vivaldi://gpu} & Hardware acceleration \\
+Media Internals & \keystroke{chrome://media-internals} & Video decode status \\
+DevTools Performance & \keystroke{F12 > Performance} & Page performance analysis \\
 \bottomrule
 \end{tabular}
-\end{center}
+\caption{Built-in Performance Monitoring Tools}
+\end{table}
 
-\vspace{0.6cm}
+\subsection{Task Manager Analysis}
+
+Use \keystroke{Shift+Esc} to identify performance issues:
+
+\begin{itemize}
+    \item \textbf{Sort by CPU} — Find processes causing high CPU usage
+    \item \textbf{Sort by Memory} — Identify memory leaks or heavy tabs
+    \item \textbf{Kill outliers} — Close problematic processes
+    \item \textbf{Extension monitoring} — Track extension resource usage
+\end{itemize}
+
+\section{External Benchmarking}
+
+\subsection{Performance Benchmarks}
+
+Regular benchmarking tools to track browser performance:
+
+\begin{enumerate}
+    \item \textbf{Speedometer 3} — Overall browser responsiveness
+    \item \textbf{MotionMark} — Graphics performance testing
+    \item \textbf{JetStream} — JavaScript performance evaluation
+    \item \textbf{WebXPRT} — Real-world web application performance
+\end{enumerate}
+
+\begin{tipbox}
+\textbf{Benchmarking Guidelines:} Run tests multiple times, close other applications, and benchmark after configuration changes to track improvements.
+\end{tipbox}
+
+\subsection{Network Performance Testing}
+
+\begin{itemize}
+    \item \textbf{Fast.com} — Netflix's speed test
+    \item \textbf{Cloudflare Speed Test} — Comprehensive network analysis
+    \item \textbf{DSLReports Speed Test} — Buffer bloat detection
+    \item \textbf{Google PageSpeed Insights} — Website loading analysis
+\end{itemize}
+
+\section{Privacy and Security Testing}
+
+\subsection{Privacy Assessment Tools}
+
+Regular privacy testing ensures your configuration remains secure:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Test} & \textbf{Purpose} \\
+\midrule
+EFF Cover Your Tracks & Browser fingerprinting resistance \\
+BrowserLeaks & Comprehensive privacy leak detection \\
+DNS Leak Test & DNS privacy verification \\
+WebRTC Leak Test & IP address leak detection \\
+SSL Labs SSL Test & HTTPS connection quality \\
+Qualys Browser Check & Security vulnerability scanning \\
+\bottomrule
+\end{tabular}
+\caption{Privacy and Security Testing Tools}
+\end{table}
+
+\section{Maintenance Schedule}
+
+\subsection{Daily Maintenance (2 minutes)}
+
+\begin{itemize}
+    \item Restart the browser to clear memory leaks
+    \item Review and close unnecessary tabs
+    \item Hibernate tab stacks before switching contexts
+    \item Check for unusual CPU/memory usage
+\end{itemize}
+
+\subsection{Weekly Maintenance (10 minutes)}
+
+\begin{itemize}
+    \item Clear browsing data (\keystroke{Ctrl+Shift+Delete})
+    \item Review extension usage and permissions
+    \item Update extensions and browser
+    \item Audit bookmark organization
+    \item Check hibernation settings effectiveness
+\end{itemize}
+
+\subsection{Monthly Maintenance (30 minutes)}
+
+\begin{itemize}
+    \item Full extension audit and cleanup
+    \item Review and update custom filters
+    \item Benchmark performance against previous months
+    \item Update system drivers (especially GPU)
+    \item Privacy test suite execution
+    \item Backup important settings and sessions
+\end{itemize}
+
+\subsection{Quarterly Maintenance (60 minutes)}
+
+\begin{itemize}
+    \item Complete browser profile cleanup
+    \item Security audit of all extensions
+    \item Review and update DNS/VPN configurations
+    \item Performance comparison with alternative browsers
+    \item Documentation update of custom configurations
+    \item Test disaster recovery procedures
+\end{itemize}
+
+\chapter{Troubleshooting}
+
+\section{Performance Issues}
+
+\subsection{Browser Feels Slow}
+
+\textbf{Immediate Actions:}
+\begin{enumerate}
+    \item Open Task Manager (\keystroke{Shift+Esc})
+    \item Sort processes by CPU and Memory usage
+    \item Close high-resource tabs and extensions
+    \item Temporarily disable all extensions
+    \item Re-enable extensions one by one to identify culprits
+\end{enumerate}
+
+\textbf{Hardware-Related Issues:}
+\begin{itemize}
+    \item Toggle hardware acceleration (disable if causing problems)
+    \item Update GPU drivers
+    \item Check system temperature and throttling
+    \item Clear graphics driver cache
+\end{itemize}
+
+\subsection{High Memory Usage}
+
+\textbf{Diagnostic Steps:}
+\begin{enumerate}
+    \item Navigate to \keystroke{vivaldi://discards}
+    \item Manually hibernate old tab stacks
+    \item Identify memory-heavy sites in Task Manager
+    \item Reduce auto-reload intervals on dashboard/monitoring sites
+    \item Move heavy tasks to separate workspaces/profiles
+\end{enumerate}
+
+\begin{warningbox}
+\textbf{Memory Leak Indicators:}
+\begin{itemize}
+    \item Memory usage continuously increasing over time
+    \item Browser becomes unresponsive after extended use
+    \item System swap file usage increasing
+    \item Other applications becoming slow
+\end{itemize}
+\end{warningbox}
+
+\section{\youtube{} Performance Issues}
+
+\subsection{Video Frame Dropping}
+
+\textbf{Troubleshooting Steps:}
+\begin{enumerate}
+    \item Right-click video twice → \menupath{Stats for nerds}
+    \item Verify hardware decode is enabled
+    \item Check dropped frame count
+    \item Try lower resolution temporarily
+    \item Disable \youtube{} extensions one by one
+    \item Consider installing h264ify if GPU lacks AV1 support
+\end{enumerate}
+
+\subsection{High CPU During Video Playback}
+
+\textbf{Common Causes and Solutions:}
+\begin{itemize}
+    \item \textbf{Software decode:} Enable hardware acceleration
+    \item \textbf{AV1 without hardware support:} Install h264ify
+    \item \textbf{Background processing:} Use \extension{Unhook} to hide feeds
+    \item \textbf{Multiple videos:} Close unused \youtube{} tabs
+    \item \textbf{Extension interference:} Temporarily disable \youtube{} extensions
+\end{itemize}
+
+\section{Extension Problems}
+
+\subsection{Extension Not Working}
+
+\textbf{Diagnostic Checklist:}
+\begin{enumerate}
+    \item Check site access permissions ("On click" vs "On all sites")
+    \item Verify the extension works on other websites
+    \item Check browser console for error messages (\keystroke{F12})
+    \item Disable other extensions to test for conflicts
+    \item Check extension's Chrome Web Store page for known issues
+    \item Verify Manifest V2/V3 compatibility
+\end{enumerate}
+
+\subsection{Service Worker Crashes}
+
+\textbf{Resolution Steps:}
+\begin{enumerate}
+    \item Navigate to \keystroke{chrome://extensions}
+    \item Toggle the problematic extension off and on
+    \item Clear extension data if available
+    \item Reinstall the extension if issues persist
+    \item Check extension developer's support channels
+\end{enumerate}
+
+\section{Connectivity and Security Issues}
+
+\subsection{Sites Not Loading Properly}
+
+\textbf{Progressive Troubleshooting:}
+\begin{enumerate}
+    \item Temporarily disable ad blocker
+    \item Clear site-specific cookies and storage
+    \item Test in private/incognito window
+    \item Disable VPN/proxy temporarily
+    \item Check DNS settings and try alternative DNS
+    \item Test with different network connection
+\end{enumerate}
+
+\subsection{Privacy Extension Conflicts}
+
+\textbf{Common Conflict Resolution:}
+\begin{itemize}
+    \item Don't run multiple ad blockers simultaneously
+    \item Configure privacy extensions to work together
+    \item Use extension whitelisting for problematic sites
+    \item Maintain updated filter lists
+    \item Test critical sites after configuration changes
+\end{itemize}
+
+\chapter{Appendix: \surfingkeys{} Starter Configuration}
+
+\section{Complete Starter Configuration}
+
+Paste the following configuration into \surfingkeys{} Options:
+
+\begin{codebox}
+\begin{lstlisting}[language=JavaScript]
+// ===============================================
+// Minimal, Fast Surfingkeys Configuration
+// ===============================================
+
+// Core Settings
+settings.defaultSearchEngine = "d";
+settings.hintAlign = "left";
+settings.scrollStepSize = 70;
+settings.focusFirstCandidate = true;
+settings.language = "en";
+settings.modeAfterYank = "Normal";
+settings.smoothScroll = false; // Performance optimization
+
+// Visual Settings
+settings.theme = `
+.sk_theme {
+    font-family: Input Sans Condensed, Charcoal, sans-serif;
+    font-size: 10pt;
+    background: #24272e;
+    color: #abb2bf;
+}
+.sk_theme tbody {
+    color: #fff;
+}
+.sk_theme input {
+    color: #d0d0d0;
+}
+.sk_theme .url {
+    color: #61afef;
+}
+.sk_theme .annotation {
+    color: #56b6c2;
+}
+.sk_theme .omnibar_highlight {
+    color: #528bff;
+}
+.sk_theme ul>li:nth-child(odd) {
+    background: #303030;
+}
+.sk_theme ul>li.focused {
+    background: #3e4452;
+}`;
+
+// Search Engine Aliases
+addSearchAliasX('d', 'DuckDuckGo', 'https://duckduckgo.com/?q=');
+addSearchAliasX('s', 'Startpage',  'https://www.startpage.com/search?q=');
+addSearchAliasX('w', 'Wikipedia',  'https://en.wikipedia.org/w/index.php?search=');
+addSearchAliasX('g', 'Google', 'https://www.google.com/search?q=');
+addSearchAliasX('gh', 'GitHub', 'https://github.com/search?q=');
+addSearchAliasX('so', 'Stack Overflow', 'https://stackoverflow.com/search?q=');
+addSearchAliasX('yt', 'YouTube', 'https://www.youtube.com/results?search_query=');
+
+// Internal Pages Exclusion
+const noRunPattern = [/^chrome:\/\/.*/, /^vivaldi:\/\/.*/, /^chrome-extension:\/\/.*/];
+RUNTIME(re => {
+  if (noRunPattern.some(rx => rx.test(window.location.href))) {
+    settings.blocklistPattern = window.location.href;
+  }
+});
+
+// ===============================================
+// Key Mappings (Vim-like)
+// ===============================================
+
+// History Navigation
+map('H', 'S');          // Back in history
+map('L', 'D');          // Forward in history
+
+// Page Scrolling
+map('J', 'R');          // Scroll half page down
+map('K', 'E');          // Scroll half page up
+map('gg', 'gg');        // Go to top
+map('G', 'G');          // Go to bottom
+
+// Tab Management
+map('x', 'x');          // Close current tab
+map('X', 'X');          // Restore recently closed tab
+map('t', 't');          // Open new tab
+map('gt', 'R');         // Next tab
+map('gT', 'E');         // Previous tab
+
+// Link Hints (Optimized for Speed)
+api.Hints.characters = 'arstneio'; // Home row for fastest typing
+mapkey('f', 'Open link in current tab', function() { 
+    Hints.create("", Hints.dispatchMouseClick); 
+});
+mapkey('F', 'Open link in new background tab', function() {
+    Hints.create("", a => openLink(a, { tabbed: true, active: false }));
+});
+
+// Advanced Link Operations
+mapkey('af', 'Open multiple links in background tabs', function() {
+    Hints.create("", a => openLink(a, { tabbed: true, active: false }), 
+    { multipleHits: true });
+});
+
+// Text and URL Operations
+mapkey('yf', 'Copy link URL', function() { 
+    Hints.create("", Hints.copyLinkUrl); 
+});
+mapkey('ya', 'Copy link text', function() { 
+    Hints.create("", Hints.copyLinkText); 
+});
+
+// Page Content Copying
+mapkey('ym', 'Copy page as Markdown', function() {
+    const title = document.title;
+    const url = window.location.href;
+    Clipboard.write(`[${title}](${url})`);
+});
+
+mapkey('yp', 'Copy page title and URL', function() {
+    const title = document.title;
+    const url = window.location.href;
+    Clipboard.write(`${title} - ${url}`);
+});
+
+// ===============================================
+// Site-Specific Configurations
+// ===============================================
+
+// YouTube Specific Shortcuts
+const isYouTube = /(^|\.)youtube\.com$/i.test(window.location.hostname);
+if (isYouTube) {
+    // Theater mode toggle
+    mapkey('yt', 'Toggle theater mode', () => {
+        const btn = document.querySelector('button.ytp-size-button');
+        if (btn) btn.click();
+    });
+    
+    // Focus search box
+    mapkey('ys', 'Focus YouTube search', () => {
+        const searchBox = document.querySelector('input#search');
+        if (searchBox) { 
+            searchBox.focus(); 
+            searchBox.select(); 
+        }
+    });
+    
+    // Video control shortcuts
+    mapkey('yp', 'Play/pause video', () => {
+        const video = document.querySelector('video');
+        if (video) {
+            video.paused ? video.play() : video.pause();
+        }
+    });
+    
+    mapkey('yf', 'Toggle fullscreen', () => {
+        const btn = document.querySelector('button.ytp-fullscreen-button');
+        if (btn) btn.click();
+    });
+}
+
+// GitHub Specific
+const isGitHub = /(^|\.)github\.com$/i.test(window.location.hostname);
+if (isGitHub) {
+    mapkey('gc', 'Go to code tab', () => {
+        const codeTab = document.querySelector('a[data-tab-item="code"]');
+        if (codeTab) codeTab.click();
+    });
+    
+    mapkey('gi', 'Go to issues', () => {
+        const issuesTab = document.querySelector('a[data-tab-item="issues"]');
+        if (issuesTab) codeTab.click();
+    });
+}
+
+// ===============================================
+// Advanced Features
+// ===============================================
+
+// Quick Mark System
+mapkey('mm', 'Add/remove bookmark', function() {
+    const url = window.location.href;
+    const title = document.title;
+    // This would integrate with your bookmark system
+    Normal.feedkeys('su'); // Open bookmark manager as fallback
+});
+
+// Quick Search in Page
+mapkey('/', 'Search in page', function() {
+    Front.openFinder();
+});
+
+// Element Inspector (for debugging)
+mapkey('gi', 'Inspect element', function() {
+    Hints.create("", function(element) {
+        element.scrollIntoView();
+        console.log(element);
+        // Open developer tools if available
+        if (window.DevToolsAPI) {
+            window.DevToolsAPI.inspectNode(element);
+        }
+    });
+});
+
+// ===============================================
+// Site Blacklist (Disable Surfingkeys)
+// ===============================================
+
+settings.blocklist = [
+    // Web Applications
+    'https://docs.google.com/*',
+    'https://sheets.google.com/*',
+    'https://slides.google.com/*',
+    'https://mail.google.com/*',
+    'https://calendar.google.com/*',
+    
+    // Development Tools
+    'https://repl.it/*',
+    'https://codepen.io/*',
+    'https://jsfiddle.net/*',
+    
+    // Design Tools
+    'https://figma.com/*',
+    'https://www.figma.com/*',
+    'https://miro.com/*',
+    
+    // Note-taking
+    'https://notion.so/*',
+    'https://www.notion.so/*',
+    'https://app.roamresearch.com/*',
+    
+    // Communication
+    'https://web.whatsapp.com/*',
+    'https://discord.com/app/*',
+    'https://app.slack.com/*',
+    
+    // Banking and Financial (Security)
+    'https://*.bank.com/*',
+    'https://paypal.com/*',
+    'https://www.paypal.com/*'
+];
+
+// ===============================================
+// Custom Commands
+// ===============================================
+
+// Toggle between light and dark theme
+mapkey('td', 'Toggle dark mode', function() {
+    document.documentElement.classList.toggle('dark-mode');
+});
+
+// Scroll to percentage of page
+mapkey('gp', 'Go to percentage of page', function() {
+    Front.showBanner("Enter percentage (0-100):");
+    // This would need additional implementation for input handling
+});
+
+// Quick tab switching by number
+for (let i = 1; i <= 9; i++) {
+    mapkey(`g${i}`, `Go to tab ${i}`, function() {
+        RUNTIME("goToTab", { index: i - 1 });
+    });
+}
+
+// ===============================================
+// Custom Hint Styles
+// ===============================================
+
+Hints.style('border: solid 2px #4A90E2; color:#efe1eb; background: #4A90E2;');
+Hints.style('border: solid 2px #4A90E2 !important; padding: 1px !important; color:#efe1eb !important; background: #4A90E2 !important;', 'text');
+
+// ===============================================
+// Completion and Search Configuration
+// ===============================================
+
+// Custom completion sources
+addSearchAliasX('translate', 'Google Translate', 
+    'https://translate.google.com/#auto/en/');
+addSearchAliasX('map', 'Google Maps', 
+    'https://www.google.com/maps/search/');
+addSearchAliasX('images', 'Google Images', 
+    'https://www.google.com/search?tbm=isch&q=');
+
+// ===============================================
+// Performance Optimizations
+// ===============================================
+
+// Reduce hint delay for faster navigation
+settings.hintExplicit = true;
+settings.hintShiftNonActive = true;
+
+// Optimize for speed over features
+settings.smoothScroll = false;
+settings.focusFirstCandidate = true;
+settings.omnibarSuggestion = true;
+settings.omnibarSuggestionTimeout = 200;
+
+// ===============================================
+// End of Configuration
+\end{lstlisting}
+\end{codebox}
+
+\section{Configuration Sections Explained}
+
+\subsection{Core Settings}
+
+The configuration begins with essential performance and usability settings:
+
+\begin{itemize}
+    \item \textbf{defaultSearchEngine:} Set to DuckDuckGo for privacy
+    \item \textbf{smoothScroll:} Disabled for maximum responsiveness
+    \item \textbf{hintAlign:} Left-aligned hints for consistent positioning
+    \item \textbf{scrollStepSize:} Optimized scrolling distance
+\end{itemize}
+
+\subsection{Search Engine Integration}
+
+Multiple search engines configured for different use cases:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Alias} & \textbf{Engine} & \textbf{Use Case} \\
+\midrule
+d & DuckDuckGo & Default privacy search \\
+s & Startpage & Google results via proxy \\
+w & Wikipedia & Quick reference lookup \\
+g & Google & When Google results needed \\
+gh & GitHub & Code repository search \\
+so & Stack Overflow & Programming questions \\
+yt & YouTube & Video content search \\
+\bottomrule
+\end{tabular}
+\caption{Configured Search Engine Aliases}
+\end{table}
+
+\subsection{Key Mapping Philosophy}
+
+The key mappings follow vim-like conventions with \vivaldi{}-specific optimizations:
+
+\begin{itemize}
+    \item \textbf{Navigation:} H/L for history, J/K for scrolling
+    \item \textbf{Tabs:} x to close, X to restore
+    \item \textbf{Links:} f for current tab, F for background tab
+    \item \textbf{Home row hints:} 'arstneio' for fastest typing
+\end{itemize}
+
+\subsection{Site-Specific Enhancements}
+
+Special functionality for frequently used sites:
+
+\textbf{\youtube{} Integration:}
+\begin{itemize}
+    \item \keystroke{yt} — Toggle theater mode
+    \item \keystroke{ys} — Focus search box
+    \item \keystroke{yp} — Play/pause video
+    \item \keystroke{yf} — Toggle fullscreen
+\end{itemize}
+
+\textbf{GitHub Integration:}
+\begin{itemize}
+    \item \keystroke{gc} — Go to code tab
+    \item \keystroke{gi} — Go to issues tab
+\end{itemize}
+
+\section{Customization Guidelines}
+
+\subsection{Adding New Shortcuts}
+
+To add custom shortcuts:
+
+\begin{codebox}
+\begin{lstlisting}[language=JavaScript]
+mapkey('shortcut', 'Description', function() {
+    // Your custom action here
+});
+\end{lstlisting}
+\end{codebox}
+
+\subsection{Site-Specific Configurations}
+
+For new sites, use this pattern:
+
+\begin{codebox}
+\begin{lstlisting}[language=JavaScript]
+const isSite = /(^|\.)example\.com$/i.test(window.location.hostname);
+if (isSite) {
+    mapkey('shortcut', 'Description', () => {
+        // Site-specific action
+    });
+}
+\end{lstlisting}
+\end{codebox}
+
+\subsection{Blacklist Management}
+
+Add problematic sites to the blacklist:
+
+\begin{codebox}
+\begin{lstlisting}[language=JavaScript]
+settings.blocklist = [
+    // Add new sites here
+    'https://newsite.com/*'
+];
+\end{lstlisting}
+\end{codebox}
+
+\chapter{Professional Tips and Advanced Techniques}
+
+\section{Workflow Integration}
+
+\subsection{Cross-Platform Considerations}
+
+\textbf{Windows Optimization:}
+\begin{itemize}
+    \item Enable hardware acceleration
+    \item Use Windows Defender exclusions for \vivaldi{} profile folder
+    \item Configure Windows power settings for performance
+    \item Use built-in Windows antivirus to avoid conflicts
+\end{itemize}
+
+\textbf{macOS Optimization:}
+\begin{itemize}
+    \item Ensure \vivaldi{} has full disk access if needed
+    \item Configure Energy Saver for performance when plugged in
+    \item Use native macOS notifications integration
+    \item Take advantage of macOS memory compression
+\end{itemize}
+
+\textbf{Linux Optimization:}
+\begin{itemize}
+    \item Configure VA-API for video acceleration
+    \item Use appropriate desktop environment integrations
+    \item Optimize system swappiness for browser workloads
+    \item Configure systemd user services if needed
+\end{itemize}
+
+\section{Advanced Profile Management}
+
+\subsection{Profile Synchronization Strategy}
+
+\begin{enumerate}
+    \item \textbf{Core Profile:} Sync across all devices
+    \item \textbf{Work Profile:} Sync only work computers
+    \item \textbf{Media Profile:} Local only (performance-focused)
+    \item \textbf{Security Profile:} Never sync (privacy-focused)
+\end{enumerate}
+
+\subsection{Profile Backup and Recovery}
+
+Create automated backup scripts:
+
+\begin{codebox}
+\begin{lstlisting}[language=bash]
+#!/bin/bash
+# Vivaldi Profile Backup Script
+
+BACKUP_DIR="$HOME/vivaldi-backups"
+PROFILE_DIR="$HOME/.config/vivaldi/Default"
+DATE=$(date +%Y%m%d_%H%M%S)
+
+mkdir -p "$BACKUP_DIR"
+tar -czf "$BACKUP_DIR/vivaldi_profile_$DATE.tar.gz" \
+    -C "$PROFILE_DIR" \
+    Bookmarks Preferences "Local Storage" \
+    "Session Storage" History Favicons
+    
+# Keep only last 30 backups
+find "$BACKUP_DIR" -name "vivaldi_profile_*.tar.gz" \
+    -mtime +30 -delete
+\end{lstlisting}
+\end{codebox}
+
+\section{Enterprise and Team Deployment}
+
+\subsection{Standardized Configuration}
+
+For team deployments, create a standard configuration package:
+
+\begin{enumerate}
+    \item Export optimized settings as JSON
+    \item Package essential extensions
+    \item Create deployment scripts
+    \item Document customization procedures
+    \item Establish update and maintenance procedures
+\end{enumerate}
+
+\subsection{Compliance and Security}
+
+\textbf{Corporate Environment Considerations:}
+\begin{itemize}
+    \item Disable sync for sensitive environments
+    \item Configure enterprise DNS and proxy settings
+    \item Implement certificate pinning if required
+    \item Use policy-based extension management
+    \item Enable audit logging where appropriate
+\end{itemize}
+
+\chapter{Future-Proofing and Updates}
+
+\section{Staying Current}
+
+\subsection{Update Strategy}
+
+\begin{itemize}
+    \item \textbf{\vivaldi{} Updates:} Enable automatic updates for security
+    \item \textbf{Extension Updates:} Monitor for breaking changes
+    \item \textbf{Configuration Review:} Quarterly settings audit
+    \item \textbf{Performance Benchmarking:} Monthly performance tests
+\end{itemize}
+
+\subsection{Technology Evolution}
+
+Stay informed about browser technology changes:
+
+\begin{itemize}
+    \item \textbf{Web Standards:} Follow W3C developments
+    \item \textbf{Chromium Updates:} Monitor upstream changes
+    \item \textbf{Privacy Regulations:} Track GDPR, CCPA updates
+    \item \textbf{Security Threats:} Stay informed about new vulnerabilities
+\end{itemize}
+
+\section{Migration Planning}
+
+\subsection{Alternative Browser Preparation}
+
+Maintain configuration portability:
+
+\begin{itemize}
+    \item Export bookmarks in standard formats
+    \item Document custom configurations
+    \item Test alternative browsers periodically
+    \item Maintain extension alternatives list
+\end{itemize}
+
+\subsection{Configuration Version Control}
+
+Track configuration changes:
+
+\begin{codebox}
+\begin{lstlisting}[language=bash]
+# Initialize git repository for configurations
+cd ~/.config/vivaldi
+git init
+git add Preferences Bookmarks
+git commit -m "Initial configuration backup"
+
+# Track changes over time
+git add -A
+git commit -m "Updated privacy settings"
+\end{lstlisting}
+\end{codebox}
+
+\chapter{Conclusion}
+
+\section{Key Achievements}
+
+By following this guide, you have created a \vivaldi{} browser configuration that delivers:
+
+\begin{multicols}{2}
+\begin{itemize}
+    \item Minimal CPU and memory usage
+    \item Enhanced privacy protection
+    \item Optimized \youtube{} performance
+    \item Professional keyboard workflow
+    \item Robust security hardening
+    \item Effective tab and workspace management
+    \item Streamlined extension ecosystem
+    \item Comprehensive monitoring capabilities
+\end{itemize}
+\end{multicols}
+
+\section{Performance Summary}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Metric} & \textbf{Before} & \textbf{After Optimization} \\
+\midrule
+Startup Time & 3-5 seconds & 1-2 seconds \\
+Memory Usage & 500MB+ idle & 200-300MB idle \\
+Tab Hibernation & Manual/never & Automatic 5-15 min \\
+YouTube CPU & 40-60% & 10-20% (HW decode) \\
+Extension Count & 10-20+ & 3-6 essential \\
+Privacy Score & Variable & 95%+ on tests \\
+\bottomrule
+\end{tabular}
+\caption{Expected Performance Improvements}
+\end{table}
+
+\section{Ongoing Optimization}
+
+Remember these key principles for continued optimization:
+
+\begin{tipbox}
+\textbf{Golden Rules:}
+\begin{itemize}
+    \item Choose one blocker and tune it well
+    \item Use profiles to isolate heavy extensions
+    \item Hibernate tabs aggressively
+    \item Keep hardware video decode enabled
+    \item Avoid flag-chasing; test and measure
+    \item Bookmark instead of hoarding tabs
+\end{itemize}
+\end{tipbox}
+
+\section{Support and Resources}
+
+\subsection{Official Resources}
+
+\begin{itemize}
+    \item \vivaldi{} Official Documentation: \url{https://help.vivaldi.com}
+    \item \vivaldi{} Community Forum: \url{https://forum.vivaldi.net}
+    \item \surfingkeys{} Documentation: \url{https://github.com/brookhong/Surfingkeys}
+\end{itemize}
+
+\subsection{Performance Monitoring}
+
+Continue to monitor your browser's performance using:
+
+\begin{itemize}
+    \item Built-in Task Manager (\keystroke{Shift+Esc})
+    \item Regular benchmarking with Speedometer 3
+    \item Privacy testing with EFF Cover Your Tracks
+    \item Monthly configuration audits
+\end{itemize}
+
+\section{Final Notes}
+
+This configuration represents a carefully balanced approach to browser optimization, prioritizing performance, privacy, and productivity. The setup is designed to be maintainable and adaptable to your specific needs while following best practices for security and performance.
+
+Regular maintenance and monitoring will ensure your optimized \vivaldi{} browser continues to deliver excellent performance as web technologies and your usage patterns evolve.
+
 \begin{center}
-\textit{Dark, decisive, and data-driven. Happy browsing with your optimized \vivaldi{} setup!}
+\textit{Happy browsing with your optimized \vivaldi{} setup!}
 \end{center}
 
 \end{document}
